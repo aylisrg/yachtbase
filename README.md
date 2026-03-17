@@ -20,7 +20,7 @@ YachtBase is designed for centralized storage, manual and automated (parsing) up
 
 | Layer | Technology |
 |---|---|
-| Frontend / Admin | Next.js 14 (App Router, TypeScript) |
+| Frontend / Admin | Next.js 16 (App Router, TypeScript) |
 | UI | Tailwind CSS |
 | Backend / Database | Supabase (PostgreSQL) |
 | Auth | Supabase Auth + Google OAuth |
