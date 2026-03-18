@@ -1,9 +1,7 @@
-'use client';
-
-import type { User } from '@supabase/supabase-js';
+import type { AuthUser } from '@/lib/auth';
 
 interface AdminHeaderProps {
-  user: User;
+  user: AuthUser;
 }
 
 export function AdminHeader({ user }: AdminHeaderProps) {
