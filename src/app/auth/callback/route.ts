@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { DEFAULT_AUTH_PROVIDER } from '@/lib/constants';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
@@ -10,6 +11,28 @@ export async function GET(request: Request) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
+      // Sync user profile to public.users table.
+      // This is a safety net in case the DB trigger hasn't fired yet.
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        await supabase.from('users').upsert(
+          {
+            id: user.id,
+            email: user.email ?? '',
+            full_name:
+              user.user_metadata?.full_name ??
+              user.user_metadata?.name ??
+              null,
+            avatar_url: user.user_metadata?.avatar_url ?? null,
+            auth_provider: user.app_metadata?.provider ?? DEFAULT_AUTH_PROVIDER,
+          },
+          { onConflict: 'id' }
+        );
+      }
+
       return NextResponse.redirect(`${origin}${next}`);
     }
   }
