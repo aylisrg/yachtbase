@@ -10,6 +10,7 @@ export async function GET() {
     timestamp: new Date().toISOString(),
     endpoints: {
       yachts: '/api/v1/yachts',
+      yacht: '/api/v1/yachts/:id',
       meta: '/api/v1/meta',
     },
   });
