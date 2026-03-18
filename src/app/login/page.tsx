@@ -1,4 +1,5 @@
 import { LoginForm } from '@/components/auth/LoginForm';
+import { Suspense } from 'react';
 
 export default function LoginPage() {
   return (
@@ -8,7 +9,9 @@ export default function LoginPage() {
           <h1 className="text-3xl font-bold text-gray-900">YachtBase</h1>
           <p className="mt-2 text-sm text-gray-600">Admin Panel</p>
         </div>
-        <LoginForm />
+        <Suspense>
+          <LoginForm />
+        </Suspense>
       </div>
     </div>
   );

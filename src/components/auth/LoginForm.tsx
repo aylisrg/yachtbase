@@ -1,8 +1,17 @@
 'use client';
 
 import { createClient } from '@/lib/supabase/client';
+import { useSearchParams } from 'next/navigation';
+
+const ERROR_MESSAGES: Record<string, string> = {
+  auth_failed: 'Authentication failed. Please try again.',
+  access_denied: 'Your account does not have access to the admin panel.',
+};
 
 export function LoginForm() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get('error');
+
   async function handleGoogleLogin() {
     const supabase = createClient();
     await supabase.auth.signInWithOAuth({
@@ -15,6 +24,13 @@ export function LoginForm() {
 
   return (
     <div className="bg-white shadow-sm rounded-lg p-8 border border-gray-200">
+      {error && (
+        <div className="mb-4 p-3 rounded-md bg-red-50 border border-red-200">
+          <p className="text-sm text-red-700">
+            {ERROR_MESSAGES[error] ?? 'An unexpected error occurred.'}
+          </p>
+        </div>
+      )}
       <button
         onClick={handleGoogleLogin}
         className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors"
