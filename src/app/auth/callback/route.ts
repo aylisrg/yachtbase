@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { DEFAULT_AUTH_PROVIDER } from '@/lib/constants';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
@@ -26,7 +27,7 @@ export async function GET(request: Request) {
               user.user_metadata?.name ??
               null,
             avatar_url: user.user_metadata?.avatar_url ?? null,
-            auth_provider: user.app_metadata?.provider ?? 'google',
+            auth_provider: user.app_metadata?.provider ?? DEFAULT_AUTH_PROVIDER,
           },
           { onConflict: 'id' }
         );
