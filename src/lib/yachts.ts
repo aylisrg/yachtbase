@@ -54,6 +54,11 @@ export async function getYacht(idOrSlug: string): Promise<Yacht | null> {
 /**
  * Retrieve a yacht together with its specifications and most recent location.
  * Returns null when not found or not accessible via RLS.
+ *
+ * Note: this function issues 3 database round-trips — one sequential call to
+ * resolve the yacht by id/slug, followed by two parallel calls for specs and
+ * locations. The sequential step is intentional: we need the yacht UUID before
+ * we can query the related tables.
  */
 export async function getYachtWithDetails(
   idOrSlug: string
