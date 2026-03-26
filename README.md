@@ -27,6 +27,23 @@ YachtBase is designed for centralized storage, manual and automated (parsing) up
 | Storage | Supabase Storage |
 | Deploy | Vercel |
 
+## Testing
+
+Unit tests use [Vitest](https://vitest.dev/) and run entirely in Node — no real Supabase connection required.
+
+```bash
+npm test                # run all tests once
+npm run test:watch      # watch mode
+npm run test:coverage   # run with coverage report
+```
+
+To run tests locally you do **not** need a `.env.local` file. All Supabase calls are mocked with `vi.mock()`.
+If you want to create a local env for reference, copy the example:
+
+```bash
+cp .env.test.example .env.test.local
+```
+
 ## Getting Started
 
 ### 1. Clone and install
