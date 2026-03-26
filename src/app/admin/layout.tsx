@@ -1,6 +1,6 @@
 import { AdminSidebar } from '@/components/layout/AdminSidebar';
 import { AdminHeader } from '@/components/layout/AdminHeader';
-import { createClient } from '@/lib/supabase/server';
+import { getAuthUser } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
 export default async function AdminLayout({
@@ -8,10 +8,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getAuthUser();
 
   if (!user) {
     redirect('/login');
