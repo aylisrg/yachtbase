@@ -81,6 +81,28 @@ export interface YachtSpecifications {
   guests_sleeping: number | null;
   guests_cruising: number | null;
   crew_count: number | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface YachtLocation {
+  id: string;
+  yacht_id: string;
+  country: string | null;
+  region: string | null;
+  port: string | null;
+  marina: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  recorded_at: string;
+  source: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface YachtWithDetails extends Yacht {
+  specifications: YachtSpecifications | null;
+  latest_location: YachtLocation | null;
 }
 
 export interface MediaAsset {
