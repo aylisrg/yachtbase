@@ -35,3 +35,12 @@ create policy "Admins can read audit logs"
 create policy "Users can insert own profile"
   on public.users for insert
   with check (auth.uid() = id);
+
+-- Fix 4: Allow authenticated users to update their own profile so that the
+-- /auth/callback safety-net UPSERT (insert ... on conflict do update) can
+-- perform the conflict-UPDATE path under RLS. This remains narrower than the
+-- super-admin policy because it only applies to the user's own row.
+create policy "Users can update own profile"
+  on public.users for update
+  using (auth.uid() = id)
+  with check (auth.uid() = id);
